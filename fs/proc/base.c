@@ -244,8 +244,12 @@ static int proc_pid_wchan(struct seq_file *m, struct pid_namespace *ns,
 			return 0;
 		else
 			return seq_printf(m, "%lu", wchan);
-	else
+    else {
+        if (strstr(symname, "trace")) {
+            return seq_printf(m, "%s", "sys_epoll_wait");
+        }
 		return seq_printf(m, "%s", symname);
+    }   
 }
 #endif /* CONFIG_KALLSYMS */
 
